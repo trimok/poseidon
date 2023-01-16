@@ -8,7 +8,7 @@
 
 
 ## Setup with Intellij IDE
-1. Create project from Initializr: File > New > project > Spring Initializr
+1. Create project from Initializr: File > New > project > Spring Initializ
 2. Add lib repository into pom.xml
 3. Add folders
     - Source root: src/main/java
