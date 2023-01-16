@@ -34,6 +34,7 @@ public class RatingController {
     @GetMapping("/rating/add")
     public String addRatingForm(Rating rating) {
 	ratingService.addRating(rating);
+
 	return "rating/add";
     }
 
