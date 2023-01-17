@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.nnk.springboot.domain.Rating;
 
-import jakarta.validation.Valid;
-
 public interface IRatingService {
 
     List<Rating> findAllRatings();
@@ -14,7 +12,7 @@ public interface IRatingService {
 
     Rating findRatingById(Integer id);
 
-    Rating updateRating(@Valid Rating rating);
+    Rating updateRating(Rating rating);
 
     boolean deleteRating(Integer id);
 
