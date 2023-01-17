@@ -19,12 +19,6 @@ import lombok.Data;
 public class Trade {
     // TODO: Map columns in data table TRADE with corresponding java fields
 
-    public Trade() {
-	tradeDate = Timestamp.from(Instant.now());
-	creationDate = Timestamp.from(Instant.now());
-	revisionDate = Timestamp.from(Instant.now());
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TradeId")
@@ -57,7 +51,7 @@ public class Trade {
 
     @NotNull(message = "tradeDate is mandatory")
     @Column(name = "tradeDate")
-    private Timestamp tradeDate;
+    private Timestamp tradeDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "security is mandatory")
     private String security;
@@ -77,7 +71,7 @@ public class Trade {
 
     @NotNull(message = "creationDate is mandatory")
     @Column(name = "creationDate")
-    private Timestamp creationDate;
+    private Timestamp creationDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "revisionName is mandatory")
     @Column(name = "revisionName")
@@ -85,7 +79,7 @@ public class Trade {
 
     @NotNull(message = "revisionDate is mandatory")
     @Column(name = "revisionDate")
-    private Timestamp revisionDate;
+    private Timestamp revisionDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "dealName is mandatory")
     @Column(name = "dealName")

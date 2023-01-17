@@ -11,18 +11,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "bidlist")
 public class BidList {
     // TODO: Map columns in data table BIDLIST with corresponding java fields
 
-    public BidList() {
-	bidListDate = Timestamp.from(Instant.now());
-	creationDate = Timestamp.from(Instant.now());
-	revisionDate = Timestamp.from(Instant.now());
+    public BidList(String account, String type, Double bidQuantity) {
+	this.account = account;
+	this.type = type;
+	this.bidQuantity = bidQuantity;
     }
 
     @Id
@@ -55,7 +59,7 @@ public class BidList {
 
     @NotNull(message = "bidListDate is mandatory")
     @Column(name = "bidListDate")
-    private Timestamp bidListDate;
+    private Timestamp bidListDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "commentary is mandatory")
     private String commentary;
@@ -78,7 +82,7 @@ public class BidList {
 
     @NotNull(message = "creationDate is mandatory")
     @Column(name = "creationDate")
-    private Timestamp creationDate;
+    private Timestamp creationDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "revisionName is mandatory")
     @Column(name = "revisionName")
@@ -86,7 +90,7 @@ public class BidList {
 
     @NotNull(message = "revisionDate is mandatory")
     @Column(name = "revisionDate")
-    private Timestamp revisionDate;
+    private Timestamp revisionDate = Timestamp.from(Instant.now());
 
     @NotEmpty(message = "dealName is mandatory")
     @Column(name = "dealName")

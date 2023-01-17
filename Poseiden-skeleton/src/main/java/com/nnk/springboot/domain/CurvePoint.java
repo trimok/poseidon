@@ -11,16 +11,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "curvepoint")
 public class CurvePoint {
     // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 
-    public CurvePoint() {
-	asOfDate = Timestamp.from(Instant.now());
-	creationDate = Timestamp.from(Instant.now());
+    public CurvePoint(Integer curveId, Double term, Double value) {
+	this.curveId = curveId;
+	this.term = term;
+	this.value = value;
     }
 
     @Id
@@ -34,7 +37,7 @@ public class CurvePoint {
 
     @NotNull(message = "asOfDate is mandatory")
     @Column(name = "asOfDate")
-    private Timestamp asOfDate;
+    private Timestamp asOfDate = Timestamp.from(Instant.now());
 
     @NotNull(message = "term is mandatory")
     private Double term;
@@ -44,5 +47,5 @@ public class CurvePoint {
 
     @Column(name = "creationDate")
     @NotNull(message = "creationDate is mandatory")
-    private Timestamp creationDate;
+    private Timestamp creationDate = Timestamp.from(Instant.now());
 }
