@@ -6,7 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -20,19 +21,19 @@ public class Rating {
     @Column(name = "Id")
     private Integer id;
 
-    @NotBlank(message = "moodysRating is mandatory")
+    @NotEmpty(message = "moodysRating is mandatory")
     @Column(name = "moodysRating")
     private String moodysRating;
 
-    @NotBlank(message = "sandPRating is mandatory")
+    @NotEmpty(message = "sandPRating is mandatory")
     @Column(name = "sandPRating")
     private String sandPRating;
 
-    @NotBlank(message = "fitchRating is mandatory")
+    @NotEmpty(message = "fitchRating is mandatory")
     @Column(name = "fitchRating")
     private String fitchRating;
 
-    @NotBlank(message = "orderNumber is mandatory")
+    @NotNull(message = "orderNumber is mandatory")
     @Column(name = "orderNumber")
     private Integer orderNumber;
 }
