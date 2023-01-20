@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.IUserService;
@@ -16,6 +17,7 @@ import com.nnk.springboot.services.IUserService;
 import jakarta.validation.Valid;
 
 @Controller
+@SessionAttributes(value = { "user" })
 public class UserController {
     @Autowired
     private IUserService userService;

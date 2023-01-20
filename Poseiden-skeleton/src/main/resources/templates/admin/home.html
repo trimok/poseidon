@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Home</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+			    <a href="/user/list">User Management</a>
+			</div>
+			<div class="col-6 text-right">
+				<form th:action="@{/logout}" method="POST" th:object="${user}">
+					Bonjour,&nbsp;
+					<span class="text-success" th:text=*{username}></span>&nbsp;&nbsp;
+					<input type="submit" value="Logout" />
+				</form>
+			</div>
+		</div>
+	</div>	
+</body>
+</html>

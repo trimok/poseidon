@@ -9,6 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +36,8 @@ public class CurvePoint {
 
     @Column(name = "CurveId")
     @NotNull(message = "curveId is mandatory")
+    @Min(value = 0, message = "the value must be positive")
+    @Max(value = 127, message = "the value must be less or equal than 127")
     private Integer curveId;
 
     @NotNull(message = "asOfDate is mandatory")
@@ -40,9 +45,13 @@ public class CurvePoint {
     private Timestamp asOfDate = Timestamp.from(Instant.now());
 
     @NotNull(message = "term is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     private Double term;
 
     @NotNull(message = "value is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     private Double value;
 
     @Column(name = "creationDate")

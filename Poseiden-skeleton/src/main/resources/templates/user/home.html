@@ -10,7 +10,6 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-			    <a href="/user/list">User Management</a>&nbsp;|&nbsp;
 				<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp; 
 				<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp; 
 				<a	href="/rating/list">Ratings</a>&nbsp;|&nbsp; 
@@ -18,7 +17,9 @@
 				<a href="/ruleName/list">Rule</a>
 			</div>
 			<div class="col-6 text-right">
-				<form th:action="@{/app-logout}" method="POST">
+				<form th:action="@{/logout}" method="POST" th:object="${user}">
+									Bonjour,&nbsp;
+					<span class="text-success" th:text=*{username}></span>&nbsp;&nbsp;
 					<input type="submit" value="Logout" />
 				</form>
 			</div>

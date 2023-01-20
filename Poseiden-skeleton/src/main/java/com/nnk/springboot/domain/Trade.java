@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -31,19 +33,27 @@ public class Trade {
     private String type;
 
     @NotNull(message = "buyQuantity is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     @Column(name = "buyQuantity")
     private Double buyQuantity;
 
     @NotNull(message = "sellQuantity is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     @Column(name = "sellQuantity")
     private Double sellQuantity;
 
     @NotNull(message = "buyPrice is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     @Column(name = "buyPrice")
     private Double buyPrice;
 
     @NotNull(message = "sellPrice is mandatory")
     @Column(name = "sellPrice")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     private Double sellPrice;
 
     @NotEmpty(message = "benchmark is mandatory")

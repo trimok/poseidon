@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -41,17 +43,25 @@ public class BidList {
     private String type;
 
     @NotNull(message = "bidQuantity is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     @Column(name = "bidQuantity")
     private Double bidQuantity;
 
     @NotNull(message = "askQuantity is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     @Column(name = "askQuantity")
     private Double askQuantity;
 
     @NotNull(message = "bid is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     private Double bid;
 
     @NotNull(message = "ask is mandatory")
+    @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
+    @Min(value = 0, message = "the value must be positive")
     private Double ask;
 
     @NotEmpty(message = "benchmark is mandatory")

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.services.ICurvePointService;
@@ -17,6 +18,7 @@ import com.nnk.springboot.services.ICurvePointService;
 import jakarta.validation.Valid;
 
 @Controller
+@SessionAttributes(value = { "user" })
 public class CurvePointController {
     @Autowired
     private ICurvePointService curvePointService;
