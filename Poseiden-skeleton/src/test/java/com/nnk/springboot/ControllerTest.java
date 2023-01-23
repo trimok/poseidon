@@ -1,5 +1,6 @@
 package com.nnk.springboot;
 
+import static com.nnk.springboot.constants.Constants.AUTHORITY_ADMIN;
 import static com.nnk.springboot.constants.Constants.AUTHORITY_USER;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -10,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -103,13 +106,19 @@ public class ControllerTest {
 
     private HashMap<String, Object> sessionAttr;
     private User userSession;
+    private User userAdminSession;
     private CustomUserDetails userDetails;
+    private CustomUserDetails userAdminDetails;
 
     @BeforeEach
     public void beforeEach() {
 
 	userSession = new User(null, "guest", "password", "GUEST", AUTHORITY_USER);
 	userDetails = new CustomUserDetails(userSession, AUTHORITY_USER);
+
+	userAdminSession = new User(null, "admin", "admin", "ADMIN", AUTHORITY_ADMIN);
+	userAdminDetails = new CustomUserDetails(userAdminSession, AUTHORITY_ADMIN);
+
 	sessionAttr = new HashMap<String, Object>();
 
 	bidListDatabase = new BidList(null, "account", "type", 1d, 1d, 1d, 1d, "benchmark", now,
@@ -131,7 +140,6 @@ public class ControllerTest {
 		"trader", "book", "creationName", now, "revisionName", now, "dealName", "dealType", "sourceListId",
 		"side");
 	userDatabase = new User(null, "guest", "@1GuestGuest", "GUEST", AUTHORITY_USER);
-
     }
 
     @AfterAll
@@ -753,4 +761,56 @@ public class ControllerTest {
 
     }
 
+    /************************* LOGIN CONTROLLER ******************************/
+    @Test
+    public void loginControllerHomeFromUserDetailsStandardUser() throws Exception {
+
+	Principal principal = new UsernamePasswordAuthenticationToken(userDatabase, "password");
+
+	sessionAttr.put("user", userSession);
+
+	when(loginService.getUserDetailsFromPrincipal(any(Principal.class))).thenReturn(userDetails);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/").sessionAttrs(sessionAttr).principal(principal))
+		.andExpect(redirectedUrl("/user/home"));
+
+	verify(loginService, times(1)).getUserDetailsFromPrincipal(any(Principal.class));
+    }
+
+    @Test
+    public void loginControllerHomeFromUserDetailsAdminUser() throws Exception {
+
+	Principal principal = new UsernamePasswordAuthenticationToken(userDatabase, "password");
+
+	sessionAttr.put("user", userAdminSession);
+
+	when(loginService.getUserDetailsFromPrincipal(any(Principal.class))).thenReturn(userAdminDetails);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/").sessionAttrs(sessionAttr).principal(principal))
+		.andExpect(redirectedUrl("/admin/home"));
+
+	verify(loginService, times(1)).getUserDetailsFromPrincipal(any(Principal.class));
+    }
+
+    @Test
+    public void loginControllerUserHome() throws Exception {
+
+	sessionAttr.put("user", userSession);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/user/home").sessionAttrs(sessionAttr))
+		.andExpect(status().isOk()).andExpect(view().name("user/home"));
+    }
+
+    @Test
+    public void loginControllerAdminHome() throws Exception {
+
+	sessionAttr.put("user", userSession);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/admin/home").sessionAttrs(sessionAttr))
+		.andExpect(status().isOk()).andExpect(view().name("admin/home"));
+    }
 }
