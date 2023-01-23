@@ -60,7 +60,6 @@ public class CustomSecurityConfig {
 		.hasAnyAuthority(AUTHORITY_USER, AUTHORITY_OIDC_USER, AUTHORITY_OAUTH2_USER)
 		.anyRequest().authenticated()
 		.and().formLogin()
-		.defaultSuccessUrl("/successHandler", true)
 		.permitAll()
 		.and().oauth2Login().userInfoEndpoint().userAuthoritiesMapper(this.userAuthoritiesMapper());
 

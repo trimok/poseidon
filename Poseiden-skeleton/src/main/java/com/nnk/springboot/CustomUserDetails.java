@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.nnk.springboot.domain.User;
@@ -49,6 +50,11 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user, GrantedAuthority authority) {
 	this.user = user;
 	addAuthority(authority);
+    }
+
+    public CustomUserDetails(User user, String authorityString) {
+	this.user = user;
+	addAuthority(new SimpleGrantedAuthority(authorityString));
     }
 
     /*

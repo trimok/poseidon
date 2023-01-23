@@ -13,21 +13,17 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "curvepoint")
 public class CurvePoint {
     // TODO: Map columns in data table CURVEPOINT with corresponding java fields
-
-    public CurvePoint(Integer curveId, Double term, Double value) {
-	this.curveId = curveId;
-	this.term = term;
-	this.value = value;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +45,7 @@ public class CurvePoint {
     @Min(value = 0, message = "the value must be positive")
     private Double term;
 
+    @Column(name = "`value`")
     @NotNull(message = "value is mandatory")
     @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
     @Min(value = 0, message = "the value must be positive")

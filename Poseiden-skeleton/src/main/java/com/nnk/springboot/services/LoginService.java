@@ -1,14 +1,19 @@
 package com.nnk.springboot.services;
 
+import static com.nnk.springboot.constants.Constants.AUTHORITY_OAUTH2_USER;
+import static com.nnk.springboot.constants.Constants.AUTHORITY_OIDC_USER;
+
 import java.security.Principal;
 import java.util.Map;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.nnk.springboot.CustomUserDetails;
 import com.nnk.springboot.domain.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +38,22 @@ public class LoginService implements ILoginService {
 	return null;
     }
 
+    @Override
+    public CustomUserDetails getUserDetailsFromPrincipal(Principal principal) {
+
+	CustomUserDetails userDetails = null;
+
+	// Get the Person Object from different type of login
+	if (principal instanceof UsernamePasswordAuthenticationToken) {
+	    // Basic login
+	    userDetails = getUserDetailsFromStandardPrincipal(principal);
+	} else if (principal instanceof OAuth2AuthenticationToken) {
+	    // OAuth / OIDC login
+	    userDetails = getUserDetailsFromOauth2OidcPrincipal(principal);
+	}
+	return userDetails;
+    }
+
     /**
      * 
      * OAuth2 / OIDC login Getting a UserDetails object from a Principal
@@ -40,9 +61,9 @@ public class LoginService implements ILoginService {
      * @param principal
      * @return
      */
-    @Override
-    public User getUserFromOauth2OidcPrincipal(Principal principal) {
+    public CustomUserDetails getUserDetailsFromOauth2OidcPrincipal(Principal principal) {
 	User user = new User();
+	CustomUserDetails userDetails = new CustomUserDetails();
 
 	// Authentication token
 	OAuth2AuthenticationToken authToken = ((OAuth2AuthenticationToken) principal);
@@ -72,6 +93,9 @@ public class LoginService implements ILoginService {
 	    user.setUsername((String) claims.get("name"));
 	    user.setFullname((String) claims.get("email"));
 
+	    // Create CustomUserDetails
+	    userDetails = new CustomUserDetails(user, AUTHORITY_OIDC_USER);
+
 	    log.info("OAuth2 / OIDC login");
 
 	} else {
@@ -89,12 +113,32 @@ public class LoginService implements ILoginService {
 		user.setUsername(name);
 		user.setFullname(email);
 
+		// Create CustomUserDetails
+		userDetails = new CustomUserDetails(user, AUTHORITY_OAUTH2_USER);
 	    }
 	    log.info("OAuth2, but No OIDC login");
 	}
 
-	log.info("Connection, name :" + user.getUsername() + ", fullname : " + user.getFullname());
+	log.info("Connection, name :" + userDetails.getUsername() + ", fullname : " + userDetails.getFullname());
 
-	return user;
+	return userDetails;
+    }
+
+    public CustomUserDetails getUserDetailsFromStandardPrincipal(Principal principal) {
+	CustomUserDetails userDetails = null;
+
+	// Get the authentication token
+	UsernamePasswordAuthenticationToken token = ((UsernamePasswordAuthenticationToken) principal);
+	if (token.isAuthenticated()) {
+	    // Get the principal
+	    userDetails = (CustomUserDetails) token.getPrincipal();
+
+	    log.info("Basic login");
+	    log.info("Connection, name :" + userDetails.getUsername() + ", fullname : " + userDetails.getFullname());
+	} else {
+	    log.error("Not Authenticated");
+	    return null;
+	}
+	return userDetails;
     }
 }

@@ -2,10 +2,12 @@ package com.nnk.springboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.nnk.springboot.repositories.RatingRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class RatingTests {
 
     @Autowired
