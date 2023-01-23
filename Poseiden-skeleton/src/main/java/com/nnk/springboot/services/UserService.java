@@ -14,6 +14,11 @@ public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    public UserService(UserRepository userRepository) {
+	this.userRepository = userRepository;
+    }
+
     @Override
     public List<User> findAllUsers() {
 	return userRepository.findAll();

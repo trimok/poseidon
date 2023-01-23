@@ -14,6 +14,11 @@ public class RuleNameService implements IRuleNameService {
     @Autowired
     private RuleNameRepository ruleNameRepository;
 
+    @Autowired
+    public RuleNameService(RuleNameRepository ruleNameRepository) {
+	this.ruleNameRepository = ruleNameRepository;
+    }
+
     @Override
     public List<RuleName> findAllRuleNames() {
 	return ruleNameRepository.findAll();

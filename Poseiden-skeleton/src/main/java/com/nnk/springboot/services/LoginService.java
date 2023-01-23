@@ -61,6 +61,7 @@ public class LoginService implements ILoginService {
      * @param principal
      * @return
      */
+    @Override
     public CustomUserDetails getUserDetailsFromOauth2OidcPrincipal(Principal principal) {
 	User user = new User();
 	CustomUserDetails userDetails = new CustomUserDetails();
@@ -124,6 +125,7 @@ public class LoginService implements ILoginService {
 	return userDetails;
     }
 
+    @Override
     public CustomUserDetails getUserDetailsFromStandardPrincipal(Principal principal) {
 	CustomUserDetails userDetails = null;
 

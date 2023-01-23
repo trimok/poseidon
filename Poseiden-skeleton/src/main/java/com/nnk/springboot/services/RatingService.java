@@ -14,6 +14,11 @@ public class RatingService implements IRatingService {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Autowired
+    public RatingService(RatingRepository ratingRepository) {
+	this.ratingRepository = ratingRepository;
+    }
+
     @Override
     public List<Rating> findAllRatings() {
 	return ratingRepository.findAll();

@@ -14,6 +14,11 @@ public class BidListService implements IBidListService {
     @Autowired
     private BidListRepository bidListRepository;
 
+    @Autowired
+    public BidListService(BidListRepository bidListRepository) {
+	this.bidListRepository = bidListRepository;
+    }
+
     @Override
     public List<BidList> findAllBidLists() {
 	return bidListRepository.findAll();

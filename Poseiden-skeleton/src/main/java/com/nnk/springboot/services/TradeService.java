@@ -14,6 +14,11 @@ public class TradeService implements ITradeService {
     @Autowired
     private TradeRepository tradeRepository;
 
+    @Autowired
+    public TradeService(TradeRepository tradeRepository) {
+	this.tradeRepository = tradeRepository;
+    }
+
     @Override
     public List<Trade> findAllTrades() {
 	return tradeRepository.findAll();

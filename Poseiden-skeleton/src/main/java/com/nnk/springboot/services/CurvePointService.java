@@ -14,6 +14,11 @@ public class CurvePointService implements ICurvePointService {
     @Autowired
     private CurvePointRepository curvePointRepository;
 
+    @Autowired
+    public CurvePointService(CurvePointRepository curvePointRepository) {
+	this.curvePointRepository = curvePointRepository;
+    }
+
     @Override
     public List<CurvePoint> findAllCurvePoints() {
 	return curvePointRepository.findAll();

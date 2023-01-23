@@ -7,4 +7,8 @@ import com.nnk.springboot.CustomUserDetails;
 public interface ILoginService {
 
     CustomUserDetails getUserDetailsFromPrincipal(Principal principal);
+
+    CustomUserDetails getUserDetailsFromOauth2OidcPrincipal(Principal principal);
+
+    CustomUserDetails getUserDetailsFromStandardPrincipal(Principal principal);
 }
