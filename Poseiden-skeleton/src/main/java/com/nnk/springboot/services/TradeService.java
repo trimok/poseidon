@@ -51,4 +51,9 @@ public class TradeService implements ITradeService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllTrade() {
+	tradeRepository.deleteAll();
+    }
 }

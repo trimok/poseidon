@@ -14,11 +14,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bidlist")
@@ -116,5 +118,24 @@ public class BidList {
 
     @NotEmpty(message = "side is mandatory")
     private String side;
+
+    @Override
+    public boolean equals(Object o) {
+	if (this == o)
+	    return true;
+
+	if (!(o instanceof BidList))
+	    return false;
+
+	BidList other = (BidList) o;
+
+	return id != null &&
+		id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
 
 }

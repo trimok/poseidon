@@ -16,4 +16,6 @@ public interface ITradeService {
 
     boolean deleteTrade(Integer id);
 
+    void deleteAllTrade();
+
 }

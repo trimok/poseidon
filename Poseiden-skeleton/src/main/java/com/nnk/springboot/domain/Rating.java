@@ -9,10 +9,12 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -38,4 +40,23 @@ public class Rating {
     @NotNull(message = "orderNumber is mandatory")
     @Column(name = "orderNumber")
     private Integer orderNumber;
+
+    @Override
+    public boolean equals(Object o) {
+	if (this == o)
+	    return true;
+
+	if (!(o instanceof Rating))
+	    return false;
+
+	Rating other = (Rating) o;
+
+	return id != null &&
+		id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
 }

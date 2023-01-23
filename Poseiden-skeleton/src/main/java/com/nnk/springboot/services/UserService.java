@@ -57,4 +57,9 @@ public class UserService implements IUserService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllUser() {
+	userRepository.deleteAll();
+    }
 }

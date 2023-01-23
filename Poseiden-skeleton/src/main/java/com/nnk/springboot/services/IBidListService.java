@@ -16,4 +16,6 @@ public interface IBidListService {
 
     boolean deleteBidList(Integer id);
 
+    void deleteAllBidList();
+
 }

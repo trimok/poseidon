@@ -16,4 +16,6 @@ public interface IRuleNameService {
 
     boolean deleteRuleName(Integer id);
 
+    void deleteAllRuleName();
+
 }

@@ -51,4 +51,9 @@ public class RuleNameService implements IRuleNameService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllRuleName() {
+	ruleNameRepository.deleteAll();
+    }
 }

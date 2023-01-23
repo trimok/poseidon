@@ -17,4 +17,6 @@ public interface IUserService {
     boolean deleteUser(Integer id);
 
     User findUserByName(String username);
+
+    void deleteAllUser();
 }

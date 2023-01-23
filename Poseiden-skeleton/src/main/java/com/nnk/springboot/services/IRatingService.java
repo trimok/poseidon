@@ -16,4 +16,6 @@ public interface IRatingService {
 
     boolean deleteRating(Integer id);
 
+    void deleteAllRating();
+
 }

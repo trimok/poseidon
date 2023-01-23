@@ -16,4 +16,6 @@ public interface ICurvePointService {
     CurvePoint updateCurvePoint(@Valid CurvePoint rating);
 
     boolean deleteCurvePoint(Integer id);
+
+    void deleteAllCurvePoint();
 }

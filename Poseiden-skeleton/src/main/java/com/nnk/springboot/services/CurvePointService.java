@@ -51,4 +51,9 @@ public class CurvePointService implements ICurvePointService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllCurvePoint() {
+	curvePointRepository.deleteAll();
+    }
 }

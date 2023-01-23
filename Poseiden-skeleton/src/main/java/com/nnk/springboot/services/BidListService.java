@@ -51,4 +51,9 @@ public class BidListService implements IBidListService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllBidList() {
+	bidListRepository.deleteAll();
+    }
 }

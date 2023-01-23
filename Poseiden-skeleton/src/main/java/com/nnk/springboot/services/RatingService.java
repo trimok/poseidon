@@ -51,4 +51,9 @@ public class RatingService implements IRatingService {
 	    return false;
 	}
     }
+
+    @Override
+    public void deleteAllRating() {
+	ratingRepository.deleteAll();
+    }
 }

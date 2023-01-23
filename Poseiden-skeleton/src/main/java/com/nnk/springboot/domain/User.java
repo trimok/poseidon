@@ -9,11 +9,13 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
@@ -35,5 +37,24 @@ public class User {
 
     @NotEmpty(message = "Role is mandatory")
     private String role;
+
+    @Override
+    public boolean equals(Object o) {
+	if (this == o)
+	    return true;
+
+	if (!(o instanceof User))
+	    return false;
+
+	User other = (User) o;
+
+	return id != null &&
+		id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
 
 }

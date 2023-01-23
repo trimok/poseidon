@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -41,4 +43,23 @@ public class RuleName {
     @NotEmpty(message = "sqlPart is mandatory")
     @Column(name = "sqlPart")
     private String sqlPart;
+
+    @Override
+    public boolean equals(Object o) {
+	if (this == o)
+	    return true;
+
+	if (!(o instanceof RuleName))
+	    return false;
+
+	RuleName other = (RuleName) o;
+
+	return id != null &&
+		id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
 }
