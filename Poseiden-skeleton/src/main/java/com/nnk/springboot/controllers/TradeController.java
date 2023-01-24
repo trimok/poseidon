@@ -17,12 +17,26 @@ import com.nnk.springboot.services.ITradeService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controller class for the Trade CRUD operations
+ * 
+ * @author trimok
+ */
 @Controller
 @SessionAttributes(value = { "user" })
 public class TradeController {
+    /**
+     * The trade service
+     */
     @Autowired
     private ITradeService tradeService;
 
+    /**
+     * Access list page
+     * 
+     * @param model : the model
+     * @return : the trade/list page
+     */
     @RequestMapping("/trade/list")
     public String home(Model model) {
 	List<Trade> trades = tradeService.findAllTrades();
@@ -31,12 +45,26 @@ public class TradeController {
 	return "trade/list";
     }
 
+    /**
+     * Access add page
+     * 
+     * @param trade : not used
+     * @return the trade/add page
+     */
     @GetMapping("/trade/add")
     public String addTradeForm(Trade trade) {
 
 	return "trade/add";
     }
 
+    /**
+     * Add operation
+     * 
+     * @param trade  : the Trade object to be added
+     * @param result : the BindingResult object, with possible errors
+     * @param model  : the model
+     * @return : redirect:/trade/list if OK, trade/add page if KO
+     */
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
 	if (result.hasErrors()) {
@@ -48,6 +76,13 @@ public class TradeController {
 	}
     }
 
+    /**
+     * Access update page
+     * 
+     * @param id    : the Trade object identifier
+     * @param model : the model
+     * @return : the trade/update page
+     */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 	Trade trade = tradeService.findTradeById(id);
@@ -59,6 +94,15 @@ public class TradeController {
 	return "trade/update";
     }
 
+    /**
+     * Update operation
+     * 
+     * @param id     : the Trade object identifier
+     * @param trade  : the Trade object
+     * @param result : the BindingResult object
+     * @param model  ; the model
+     * @return : redirect:/trade/list if OK, trade/update page if KO
+     */
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
 	    BindingResult result, Model model) {
@@ -71,6 +115,13 @@ public class TradeController {
 	}
     }
 
+    /**
+     * Delete operation
+     * 
+     * @param id    : the Trade Object identifier
+     * @param model : the model
+     * @return : redirect:/trade/list
+     */
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
 	boolean ok = tradeService.deleteTrade(id);

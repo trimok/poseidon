@@ -13,9 +13,14 @@ import java.text.SimpleDateFormat;
  * 
  */
 public class SqlTimestampPropertyEditor extends PropertyEditorSupport {
-
+    /**
+     * DEFAULT_BATCH_PATTERN
+     */
     public static final String DEFAULT_BATCH_PATTERN = "yyyy-MM-dd";
 
+    /**
+     * SimpleDateFormat
+     */
     private final SimpleDateFormat sdf;
 
     /**

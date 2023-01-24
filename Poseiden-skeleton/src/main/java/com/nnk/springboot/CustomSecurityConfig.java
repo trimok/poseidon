@@ -25,11 +25,21 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Security configuration class
+ * 
+ * @author trimok
+ */
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = { "com.nnk.springboot" })
 public class CustomSecurityConfig {
 
+    /**
+     * Bean userDetailsService
+     * 
+     * @return an UserDetailsService interface
+     */
     @Bean
     UserDetailsService CustomUserDetailsService() {
 	CustomUserDetailsService userDetailsService = new CustomUserDetailsService();
@@ -69,6 +79,11 @@ public class CustomSecurityConfig {
 	return http.build();
     }
 
+    /**
+     * userAuthoritiesMapper
+     * 
+     * @return mappedAuthorities
+     */
     private GrantedAuthoritiesMapper userAuthoritiesMapper() {
 	return (authorities) -> {
 	    Set<GrantedAuthority> mappedAuthorities = new HashSet<>();

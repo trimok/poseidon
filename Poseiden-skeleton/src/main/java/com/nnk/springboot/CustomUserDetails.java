@@ -14,6 +14,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Custom UserDetails
+ * 
+ * @author trimok
+ *
+ */
 @Setter
 @Getter
 @NoArgsConstructor
@@ -35,43 +41,60 @@ public class CustomUserDetails implements UserDetails {
      */
     Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-    /*
+    /**
+     * Constructor
      * 
+     * @param user : user
      */
     public CustomUserDetails(User user) {
 	this.user = user;
     }
 
     /**
+     * constructor CustomUserDetails
      * 
-     * @param user
-     * @param authority
+     * @param user      : user
+     * @param authority : authority
      */
     public CustomUserDetails(User user, GrantedAuthority authority) {
 	this.user = user;
 	addAuthority(authority);
     }
 
+    /**
+     * constructor CustomUserDetails
+     * 
+     * @param user            : the user
+     * @param authorityString : string authority (ROLE_USER, etc..)
+     */
     public CustomUserDetails(User user, String authorityString) {
 	this.user = user;
 	addAuthority(new SimpleGrantedAuthority(authorityString));
     }
 
-    /*
-     * 
+    /**
+     * getAuthorities
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 	return authorities;
     }
 
-    /*
+    /**
      * Adding an authority
+     * 
+     * @param authority : authority
      */
     public void addAuthority(GrantedAuthority authority) {
 	authorities.add(authority);
     }
 
+    /**
+     * hasAuthority
+     * 
+     * @param authorityName : authorityName
+     * @return : boolean result
+     */
     public boolean hasAuthority(String authorityName) {
 	boolean ret = false;
 
@@ -101,7 +124,9 @@ public class CustomUserDetails implements UserDetails {
     }
 
     /**
-     * email
+     * fullname
+     * 
+     * @return : fullname
      */
     public String getFullname() {
 	return user.getFullname();

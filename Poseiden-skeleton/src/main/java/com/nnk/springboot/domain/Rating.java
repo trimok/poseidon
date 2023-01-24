@@ -13,6 +13,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * Rating domain object
+ * 
+ * @author trimok
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,27 +26,45 @@ import lombok.Setter;
 @Entity
 @Table(name = "rating")
 public class Rating {
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
 
+    /**
+     * moodysRating
+     */
     @NotEmpty(message = "moodysRating is mandatory")
     @Column(name = "moodysRating")
     private String moodysRating;
 
+    /**
+     * sandPRating
+     */
     @NotEmpty(message = "sandPRating is mandatory")
     @Column(name = "sandPRating")
     private String sandPRating;
 
+    /**
+     * fitchRating
+     */
     @NotEmpty(message = "fitchRating is mandatory")
     @Column(name = "fitchRating")
     private String fitchRating;
 
+    /**
+     * orderNumber
+     */
     @NotNull(message = "orderNumber is mandatory")
     @Column(name = "orderNumber")
     private Integer orderNumber;
 
+    /**
+     * equals
+     */
     @Override
     public boolean equals(Object o) {
 	if (this == o)
@@ -55,6 +79,9 @@ public class Rating {
 		id.equals(other.getId());
     }
 
+    /**
+     * hashCode
+     */
     @Override
     public int hashCode() {
 	return getClass().hashCode();

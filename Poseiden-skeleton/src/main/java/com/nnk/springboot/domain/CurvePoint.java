@@ -18,6 +18,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * CurvePoind domain object
+ * 
+ * @author trimok
+ */
 @Entity
 @Getter
 @Setter
@@ -27,36 +32,57 @@ import lombok.Setter;
 public class CurvePoint {
     // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
 
+    /**
+     * curveId
+     */
     @Column(name = "CurveId")
     @NotNull(message = "curveId is mandatory")
     @Min(value = 0, message = "the value must be positive")
     @Max(value = 127, message = "the value must be less or equal than 127")
     private Integer curveId;
 
+    /**
+     * asOfDate
+     */
     @NotNull(message = "asOfDate is mandatory")
     @Column(name = "asOfDate")
     private Timestamp asOfDate = Timestamp.from(Instant.now());
 
+    /**
+     * term
+     */
     @NotNull(message = "term is mandatory")
     @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
     @Min(value = 0, message = "the value must be positive")
     private Double term;
 
+    /**
+     * value
+     */
     @Column(name = "`value`")
     @NotNull(message = "value is mandatory")
     @Digits(integer = 9, fraction = 2, message = "no more than 9 digits before decimal point, no more than 2 digits after decimal point")
     @Min(value = 0, message = "the value must be positive")
     private Double value;
 
+    /**
+     * creationDate
+     */
     @Column(name = "creationDate")
     @NotNull(message = "creationDate is mandatory")
     private Timestamp creationDate = Timestamp.from(Instant.now());
 
+    /**
+     * equals
+     */
     @Override
     public boolean equals(Object o) {
 	if (this == o)
@@ -71,6 +97,9 @@ public class CurvePoint {
 		id.equals(other.getId());
     }
 
+    /**
+     * hashCode
+     */
     @Override
     public int hashCode() {
 	return getClass().hashCode();

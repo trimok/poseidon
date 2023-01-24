@@ -17,12 +17,26 @@ import com.nnk.springboot.services.IRuleNameService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controller class for the RuleName CRUD operations
+ * 
+ * @author trimok
+ */
 @Controller
 @SessionAttributes(value = { "user" })
 public class RuleNameController {
+    /**
+     * The ruleName service
+     */
     @Autowired
     private IRuleNameService ruleNameService;
 
+    /**
+     * Access list page
+     * 
+     * @param model : the model
+     * @return : the ruleName/list page
+     */
     @RequestMapping("/ruleName/list")
     public String home(Model model) {
 	List<RuleName> ruleNames = ruleNameService.findAllRuleNames();
@@ -31,12 +45,26 @@ public class RuleNameController {
 	return "ruleName/list";
     }
 
+    /**
+     * Access add page
+     * 
+     * @param ruleName : not used
+     * @return : the ruleName/add page
+     */
     @GetMapping("/ruleName/add")
     public String addRuleNameForm(RuleName ruleName) {
 
 	return "ruleName/add";
     }
 
+    /**
+     * Add operation
+     * 
+     * @param ruleName : the valid RuleName object
+     * @param result   : the BindingResult object, with possible errors
+     * @param model    : the model
+     * @return : redirect:/ruleName/list id OK, ruleName/add page if KO
+     */
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
 	if (result.hasErrors()) {
@@ -48,6 +76,13 @@ public class RuleNameController {
 	}
     }
 
+    /**
+     * Access update page
+     * 
+     * @param id    : the RuleName object identifier
+     * @param model : the model
+     * @return : the ruleName/update page
+     */
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 	RuleName ruleName = ruleNameService.findRuleNameById(id);
@@ -59,6 +94,15 @@ public class RuleNameController {
 	return "ruleName/update";
     }
 
+    /**
+     * Update operation
+     * 
+     * @param id       : the RuleName object identifier
+     * @param ruleName : the RuleName object
+     * @param result   : the BindingResult object
+     * @param model    : the model
+     * @return : redirect:/ruleName/list if OK, ruleName/update page if KO
+     */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
 	    BindingResult result, Model model) {
@@ -71,6 +115,13 @@ public class RuleNameController {
 	}
     }
 
+    /**
+     * Delete operation
+     * 
+     * @param id    : the RuleName identifier
+     * @param model : the model
+     * @return : redirect:/ruleName/list
+     */
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
 	boolean ok = ruleNameService.deleteRuleName(id);

@@ -18,6 +18,11 @@ import com.nnk.springboot.domain.User;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The Login Service
+ * 
+ * @author trimok
+ */
 @Service
 @Slf4j
 public class LoginService implements ILoginService {
@@ -38,6 +43,9 @@ public class LoginService implements ILoginService {
 	return null;
     }
 
+    /**
+     * getUserDetailsFromPrincipal
+     */
     @Override
     public CustomUserDetails getUserDetailsFromPrincipal(Principal principal) {
 
@@ -58,8 +66,8 @@ public class LoginService implements ILoginService {
      * 
      * OAuth2 / OIDC login Getting a UserDetails object from a Principal
      * 
-     * @param principal
-     * @return
+     * @param principal : the principal
+     * @return : CustomUserDetails
      */
     @Override
     public CustomUserDetails getUserDetailsFromOauth2OidcPrincipal(Principal principal) {
@@ -125,6 +133,13 @@ public class LoginService implements ILoginService {
 	return userDetails;
     }
 
+    /**
+     * 
+     * standard user Getting a UserDetails object from a Principal
+     * 
+     * @param principal : the principal
+     * @return : CustomUserDetails
+     */
     @Override
     public CustomUserDetails getUserDetailsFromStandardPrincipal(Principal principal) {
 	CustomUserDetails userDetails = null;

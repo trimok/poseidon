@@ -17,11 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * A filter class for logging requests and responses
+ * 
  * @author trimok
  *
- */
-/**
- * A filter class for logging requests and responses
  */
 @Slf4j
 @Component

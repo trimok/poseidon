@@ -14,13 +14,28 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nnk.springboot.CustomUserDetails;
 import com.nnk.springboot.services.ILoginService;
 
+/**
+ * Controller class for login operations
+ * 
+ * @author trimok
+ */
 @Controller
 @SessionAttributes(value = { "user" })
 public class LoginController {
 
+    /**
+     * The login service
+     */
     @Autowired
     private ILoginService loginService;
 
+    /**
+     * Management authenticated users, home page, session User object
+     * 
+     * @param principal : the Principal object
+     * @param model     : the model
+     * @return : user/home or admin/home page if OK, redirect login if KO
+     */
     @GetMapping("/*")
     public String homeFromUserDetails(Principal principal, Model model) {
 	if (principal == null) {
@@ -40,16 +55,31 @@ public class LoginController {
 	}
     }
 
+    /**
+     * Redirection user/home page
+     * 
+     * @return user/home page
+     */
     @GetMapping("/user/home")
     public String userHome() {
 	return "user/home";
     }
 
+    /**
+     * Redirection admin/home page
+     * 
+     * @return admin/home page
+     */
     @GetMapping("/admin/home")
     public String adminHome() {
 	return "admin/home";
     }
 
+    /**
+     * Redirection login page
+     * 
+     * @return login
+     */
     @GetMapping("/login")
     public ModelAndView login() {
 	ModelAndView mav = new ModelAndView();
@@ -57,6 +87,11 @@ public class LoginController {
 	return mav;
     }
 
+    /**
+     * Redirection error page
+     * 
+     * @return error 403
+     */
     @GetMapping("/error")
     public ModelAndView error() {
 	ModelAndView mav = new ModelAndView();
