@@ -49,14 +49,11 @@ public class CustomSecurityConfig {
 	http.authorizeHttpRequests()
 		.requestMatchers("/error").permitAll()
 		.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-		.requestMatchers("/admin/home", "/user/list", "/user/add", "/user/update/**")
+		.requestMatchers("/admin/home", "/user/list", "/user/add",
+			"/user/update/**, /user/delete/**,/user/validate")
 		.hasAnyAuthority(AUTHORITY_ADMIN)
-		.requestMatchers("/user/home",
-			"/bidList/list", "/bidList/add", "/bidList/update/**",
-			"/curvePoint/list", "/curvePoint/add", "/curvePoint/update/**",
-			"/rating/list", "/rating/add", "/rating/update/**",
-			"/trade/list", "/trade/add", "/trade/update/**",
-			"/ruleName/list", "/ruleName/add", "/ruleName/update/**")
+		.requestMatchers("/user/home", "/bidList/**", "/curvePoint/**", "/rating/**", "/trade/**",
+			"/ruleName/**")
 		.hasAnyAuthority(AUTHORITY_USER, AUTHORITY_OIDC_USER, AUTHORITY_OAUTH2_USER)
 		.anyRequest().authenticated()
 		.and().formLogin()

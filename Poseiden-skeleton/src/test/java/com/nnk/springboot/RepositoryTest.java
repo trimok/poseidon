@@ -48,19 +48,14 @@ public class RepositoryTest {
 
     @Autowired
     private BidListRepository bidListRepository;
-
     @Autowired
     private CurvePointRepository curvePointRepository;
-
     @Autowired
     private RatingRepository ratingRepository;
-
     @Autowired
     private RuleNameRepository ruleNameRepository;
-
     @Autowired
     private TradeRepository tradeRepository;
-
     @Autowired
     private UserRepository userRepository;
 

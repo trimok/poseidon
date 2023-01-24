@@ -170,11 +170,18 @@ public class ServiceTest {
     }
 
     @Test
-    public void bidListServicedeleteBidList() {
+    public void bidListServiceDeleteBidList() {
 
 	when(bidListRepository.findById(any(Integer.class))).thenReturn(Optional.of(bidListDatabase));
 	bidListService.deleteBidList(1);
 	verify(bidListRepository, times(1)).delete(any(BidList.class));
+    }
+
+    @Test
+    public void bidListServiceDeleteAllBidList() {
+
+	bidListService.deleteAllBidList();
+	verify(bidListRepository, times(1)).deleteAll();
     }
 
     /*********************** CURVEPOINT SERVICE **************************/
@@ -216,11 +223,18 @@ public class ServiceTest {
     }
 
     @Test
-    public void curvePointServicedeleteCurvePoint() {
+    public void curvePointServiceDeleteCurvePoint() {
 
 	when(curvePointRepository.findById(any(Integer.class))).thenReturn(Optional.of(curvePointDatabase));
 	curvePointService.deleteCurvePoint(1);
 	verify(curvePointRepository, times(1)).delete(any(CurvePoint.class));
+    }
+
+    @Test
+    public void curvePointServiceDeleteAllCurvePoint() {
+
+	curvePointService.deleteAllCurvePoint();
+	verify(curvePointRepository, times(1)).deleteAll();
     }
 
     /*********************** RATING SERVICE **************************/
@@ -262,11 +276,18 @@ public class ServiceTest {
     }
 
     @Test
-    public void ratingServicedeleteRating() {
+    public void ratingServiceDeleteRating() {
 
 	when(ratingRepository.findById(any(Integer.class))).thenReturn(Optional.of(ratingDatabase));
 	ratingService.deleteRating(1);
 	verify(ratingRepository, times(1)).delete(any(Rating.class));
+    }
+
+    @Test
+    public void ratingServiceDeleteAllRating() {
+
+	ratingService.deleteAllRating();
+	verify(ratingRepository, times(1)).deleteAll();
     }
 
     /*********************** RULENAME SERVICE **************************/
@@ -308,11 +329,18 @@ public class ServiceTest {
     }
 
     @Test
-    public void ruleNameServicedeleteRuleName() {
+    public void ruleNameServiceDeleteRuleName() {
 
 	when(ruleNameRepository.findById(any(Integer.class))).thenReturn(Optional.of(ruleNameDatabase));
 	ruleNameService.deleteRuleName(1);
 	verify(ruleNameRepository, times(1)).delete(any(RuleName.class));
+    }
+
+    @Test
+    public void ruleNameServiceDeleteAllRuleName() {
+
+	ruleNameService.deleteAllRuleName();
+	verify(ruleNameRepository, times(1)).deleteAll();
     }
 
     /*********************** TRADE SERVICE **************************/
@@ -354,14 +382,21 @@ public class ServiceTest {
     }
 
     @Test
-    public void tradeServicedeleteTrade() {
+    public void tradeServiceDeleteTrade() {
 
 	when(tradeRepository.findById(any(Integer.class))).thenReturn(Optional.of(tradeDatabase));
 	tradeService.deleteTrade(1);
 	verify(tradeRepository, times(1)).delete(any(Trade.class));
     }
 
-    /*********************** BIDLIST SERVICE **************************/
+    @Test
+    public void tradeServiceDeleteAllTrade() {
+
+	tradeService.deleteAllTrade();
+	verify(tradeRepository, times(1)).deleteAll();
+    }
+
+    /*********************** USER SERVICE **************************/
 
     @Test
     public void userServiceFindAllUsers() {
@@ -400,11 +435,18 @@ public class ServiceTest {
     }
 
     @Test
-    public void userServicedeleteUser() {
+    public void userServiceDeleteUser() {
 
 	when(userRepository.findById(any(Integer.class))).thenReturn(Optional.of(userDatabase));
 	userService.deleteUser(1);
 	verify(userRepository, times(1)).delete(any(User.class));
+    }
+
+    @Test
+    public void userServiceDeleteAllUser() {
+
+	userService.deleteAllUser();
+	verify(userRepository, times(1)).deleteAll();
     }
 
     /*********************** LOGIN SERVICE **************************/

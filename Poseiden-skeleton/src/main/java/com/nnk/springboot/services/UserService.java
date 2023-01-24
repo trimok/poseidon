@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.User;
@@ -26,6 +27,8 @@ public class UserService implements IUserService {
 
     @Override
     public User addUser(User user) {
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	user.setPassword(encoder.encode(user.getPassword()));
 	return userRepository.save(user);
     }
 
@@ -43,6 +46,8 @@ public class UserService implements IUserService {
 
     @Override
     public User updateUser(User user) {
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	user.setPassword(encoder.encode(user.getPassword()));
 	return userRepository.save(user);
     }
 
