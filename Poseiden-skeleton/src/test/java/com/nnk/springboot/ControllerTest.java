@@ -795,6 +795,36 @@ public class ControllerTest {
     }
 
     @Test
+    public void loginControllerErrorPrincipal() throws Exception {
+
+	sessionAttr.put("user", userSession);
+
+	when(loginService.getUserDetailsFromPrincipal(any(Principal.class))).thenReturn(userAdminDetails);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/").sessionAttrs(sessionAttr))
+		.andExpect(redirectedUrl("/login"));
+
+	verify(loginService, times(0)).getUserDetailsFromPrincipal(any(Principal.class));
+    }
+
+    @Test
+    public void loginControllerHomeErrorUserDetailsFromPrincipal() throws Exception {
+
+	Principal principal = new UsernamePasswordAuthenticationToken(userDatabase, "password");
+
+	sessionAttr.put("user", userSession);
+
+	when(loginService.getUserDetailsFromPrincipal(any(Principal.class))).thenReturn(null);
+
+	mockMvc
+		.perform(MockMvcRequestBuilders.get("/").sessionAttrs(sessionAttr).principal(principal))
+		.andExpect(redirectedUrl("/login"));
+
+	verify(loginService, times(1)).getUserDetailsFromPrincipal(any(Principal.class));
+    }
+
+    @Test
     public void loginControllerUserHome() throws Exception {
 
 	sessionAttr.put("user", userSession);

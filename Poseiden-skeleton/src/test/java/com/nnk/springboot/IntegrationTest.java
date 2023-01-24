@@ -3,7 +3,9 @@ package com.nnk.springboot;
 import static com.nnk.springboot.constants.Constants.AUTHORITY_ADMIN;
 import static com.nnk.springboot.constants.Constants.AUTHORITY_USER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -189,6 +191,60 @@ public class IntegrationTest {
 	assertThat(bidLists.size()).isEqualTo(0);
     }
 
+    @Test
+    public void bidListControllerErrorValidate() throws Exception {
+
+	bidListDatabase.setAccount(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/bidList/validate").sessionAttrs(sessionAttr).flashAttr("bidList",
+			bidListDatabase));
+
+	List<BidList> bidLists = bidListService.findAllBidLists();
+	assertThat(bidLists.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void bidListControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/bidList/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"bidList",
+			bidListDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void bidListControllerErrorUpdateBidList() throws Exception {
+
+	BidList bidList = bidListService.addBidList(bidListDatabase);
+	bidListDatabaseUpdate.setAccount(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/bidList/update/" + bidList.getId()).sessionAttrs(sessionAttr).flashAttr(
+			"bidList",
+			bidListDatabaseUpdate))
+		.andExpect(view().name("bidList/update"));
+
+	List<BidList> bidLists = bidListService.findAllBidLists();
+	assertThat(bidLists.size()).isEqualTo(1);
+
+	bidList = bidLists.get(0);
+	assertThat(bidList).isEqualTo(bidListDatabase);
+    }
+
+    @Test
+    public void bidListControllerErrorDeleteBidList() throws Exception {
+
+	BidList bidList = bidListService.addBidList(bidListDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/bidList/delete/" + (bidList.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<BidList> bidLists = bidListService.findAllBidLists();
+	assertThat(bidLists.size()).isEqualTo(1);
+    }
+
     /*************************** CURVEPOINT ************************************/
 
     @Test
@@ -236,6 +292,61 @@ public class IntegrationTest {
 
 	List<CurvePoint> curvePoints = curvePointService.findAllCurvePoints();
 	assertThat(curvePoints.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void curvePointControllerErrorValidate() throws Exception {
+
+	curvePointDatabase.setCurveId(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/curvePoint/validate").sessionAttrs(sessionAttr).flashAttr("curvePoint",
+			curvePointDatabase));
+
+	List<CurvePoint> curvePoints = curvePointService.findAllCurvePoints();
+	assertThat(curvePoints.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void curvePointControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/curvePoint/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"curvePoint",
+			curvePointDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void curvePointControllerErrorUpdateCurvePoint() throws Exception {
+
+	CurvePoint curvePoint = curvePointService.addCurvePoint(curvePointDatabase);
+	curvePointDatabaseUpdate.setCurveId(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/curvePoint/update/" + curvePoint.getId()).sessionAttrs(sessionAttr)
+			.flashAttr(
+				"curvePoint",
+				curvePointDatabaseUpdate))
+		.andExpect(view().name("curvePoint/update"));
+
+	List<CurvePoint> curvePoints = curvePointService.findAllCurvePoints();
+	assertThat(curvePoints.size()).isEqualTo(1);
+
+	curvePoint = curvePoints.get(0);
+	assertThat(curvePoint).isEqualTo(curvePointDatabase);
+    }
+
+    @Test
+    public void curvePointControllerErrorDeleteCurvePoint() throws Exception {
+
+	CurvePoint curvePoint = curvePointService.addCurvePoint(curvePointDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/curvePoint/delete/" + (curvePoint.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<CurvePoint> curvePoints = curvePointService.findAllCurvePoints();
+	assertThat(curvePoints.size()).isEqualTo(1);
     }
 
     /*************************** RATING ************************************/
@@ -287,6 +398,61 @@ public class IntegrationTest {
 	assertThat(ratings.size()).isEqualTo(0);
     }
 
+    @Test
+    public void ratingControllerErrorValidate() throws Exception {
+
+	ratingDatabase.setFitchRating(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/rating/validate").sessionAttrs(sessionAttr).flashAttr("rating",
+			ratingDatabase));
+
+	List<Rating> ratings = ratingService.findAllRatings();
+	assertThat(ratings.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void ratingControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/rating/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"rating",
+			ratingDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void ratingControllerErrorUpdateRating() throws Exception {
+
+	Rating rating = ratingService.addRating(ratingDatabase);
+	ratingDatabaseUpdate.setFitchRating(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/rating/update/" + rating.getId()).sessionAttrs(sessionAttr)
+			.flashAttr(
+				"rating",
+				ratingDatabaseUpdate))
+		.andExpect(view().name("rating/update"));
+
+	List<Rating> ratings = ratingService.findAllRatings();
+	assertThat(ratings.size()).isEqualTo(1);
+
+	rating = ratings.get(0);
+	assertThat(rating).isEqualTo(ratingDatabase);
+    }
+
+    @Test
+    public void ratingControllerErrorDeleteRating() throws Exception {
+
+	Rating rating = ratingService.addRating(ratingDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/rating/delete/" + (rating.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<Rating> ratings = ratingService.findAllRatings();
+	assertThat(ratings.size()).isEqualTo(1);
+    }
+
     /*************************** RULENAME ************************************/
 
     @Test
@@ -336,6 +502,61 @@ public class IntegrationTest {
 	assertThat(ruleNames.size()).isEqualTo(0);
     }
 
+    @Test
+    public void ruleNameControllerErrorValidate() throws Exception {
+
+	ruleNameDatabase.setJson(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/ruleName/validate").sessionAttrs(sessionAttr).flashAttr("ruleName",
+			ruleNameDatabase));
+
+	List<RuleName> ruleNames = ruleNameService.findAllRuleNames();
+	assertThat(ruleNames.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void ruleNameControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/ruleName/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"ruleName",
+			ruleNameDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void ruleNameControllerErrorUpdateRuleName() throws Exception {
+
+	RuleName ruleName = ruleNameService.addRuleName(ruleNameDatabase);
+	ruleNameDatabaseUpdate.setJson(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/ruleName/update/" + ruleName.getId()).sessionAttrs(sessionAttr)
+			.flashAttr(
+				"ruleName",
+				ruleNameDatabaseUpdate))
+		.andExpect(view().name("ruleName/update"));
+
+	List<RuleName> ruleNames = ruleNameService.findAllRuleNames();
+	assertThat(ruleNames.size()).isEqualTo(1);
+
+	ruleName = ruleNames.get(0);
+	assertThat(ruleName).isEqualTo(ruleNameDatabase);
+    }
+
+    @Test
+    public void ruleNameControllerErrorDeleteRuleName() throws Exception {
+
+	RuleName ruleName = ruleNameService.addRuleName(ruleNameDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/ruleName/delete/" + (ruleName.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<RuleName> ruleNames = ruleNameService.findAllRuleNames();
+	assertThat(ruleNames.size()).isEqualTo(1);
+    }
+
     /*************************** TRADE ************************************/
 
     @Test
@@ -383,6 +604,61 @@ public class IntegrationTest {
 
 	List<Trade> trades = tradeService.findAllTrades();
 	assertThat(trades.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void tradeControllerErrorValidate() throws Exception {
+
+	tradeDatabase.setAccount(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/trade/validate").sessionAttrs(sessionAttr).flashAttr("trade",
+			tradeDatabase));
+
+	List<Trade> trades = tradeService.findAllTrades();
+	assertThat(trades.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void tradeControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/trade/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"trade",
+			tradeDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void tradeControllerErrorUpdateTrade() throws Exception {
+
+	Trade trade = tradeService.addTrade(tradeDatabase);
+	tradeDatabaseUpdate.setAccount(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/trade/update/" + trade.getId()).sessionAttrs(sessionAttr)
+			.flashAttr(
+				"trade",
+				tradeDatabaseUpdate))
+		.andExpect(view().name("trade/update"));
+
+	List<Trade> trades = tradeService.findAllTrades();
+	assertThat(trades.size()).isEqualTo(1);
+
+	trade = trades.get(0);
+	assertThat(trade).isEqualTo(tradeDatabase);
+    }
+
+    @Test
+    public void tradeControllerErrorDeleteTrade() throws Exception {
+
+	Trade trade = tradeService.addTrade(tradeDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/trade/delete/" + (trade.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<Trade> trades = tradeService.findAllTrades();
+	assertThat(trades.size()).isEqualTo(1);
     }
 
     /*************************** USER ************************************/
@@ -435,5 +711,60 @@ public class IntegrationTest {
 
 	List<User> users = userService.findAllUsers();
 	assertThat(users.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void userControllerErrorValidate() throws Exception {
+
+	userDatabase.setUsername(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/user/validate").sessionAttrs(sessionAttr).flashAttr("user",
+			userDatabase));
+
+	List<User> users = userService.findAllUsers();
+	assertThat(users.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void userControllerErrorShowUpdateForm() throws Exception {
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/user/update/1").sessionAttrs(sessionAttr).flashAttr(
+			"user",
+			userDatabase))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+    }
+
+    @Test
+    public void userControllerErrorUpdateUser() throws Exception {
+
+	User user = userService.addUser(userDatabase);
+	userDatabaseUpdate.setUsername(null);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.post("/user/update/" + user.getId()).sessionAttrs(sessionAttr)
+			.flashAttr(
+				"user",
+				userDatabaseUpdate))
+		.andExpect(view().name("user/update"));
+
+	List<User> users = userService.findAllUsers();
+	assertThat(users.size()).isEqualTo(1);
+
+	user = users.get(0);
+	assertThat(user).isEqualTo(userDatabase);
+    }
+
+    @Test
+    public void userControllerErrorDeleteUser() throws Exception {
+
+	User user = userService.addUser(userDatabase);
+
+	mockMvc.perform(
+		MockMvcRequestBuilders.get("/user/delete/" + (user.getId() + 1)).sessionAttrs(sessionAttr))
+		.andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException));
+
+	List<User> users = userService.findAllUsers();
+	assertThat(users.size()).isEqualTo(1);
     }
 }

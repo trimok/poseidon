@@ -452,6 +452,19 @@ public class ServiceTest {
     /*********************** LOGIN SERVICE **************************/
 
     @Test
+    public void loginServiceGetUserDetails() {
+	User user = new User(null, "guest", "password", "GUEST", AUTHORITY_USER);
+	CustomUserDetails userDetails = new CustomUserDetails(user, AUTHORITY_USER);
+
+	UsernamePasswordAuthenticationToken testingAuthenticationToken = new UsernamePasswordAuthenticationToken(
+		userDetails,
+		null, Arrays.asList(new SimpleGrantedAuthority(AUTHORITY_USER)));
+
+	UserDetails usesrDetails = loginService.getUserDetailsFromPrincipal(testingAuthenticationToken);
+	assertNotNull(usesrDetails);
+    }
+
+    @Test
     public void loginServiceGetStandardUserDetails() {
 	User user = new User(null, "guest", "password", "GUEST", AUTHORITY_USER);
 	CustomUserDetails userDetails = new CustomUserDetails(user, AUTHORITY_USER);
