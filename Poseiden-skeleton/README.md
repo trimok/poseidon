@@ -29,3 +29,19 @@
 ## Security
 1. Create user service to load user from  database and place in package com.nnk.springboot.services
 2. Add configuration class and place in package com.nnk.springboot.config
+
+
+
+![](md/Diapositive1.PNG)
+![](md/Diapositive2.PNG)
+![](md/Diapositive3.PNG)
+![](md/Diapositive4.PNG)
+![](md/Diapositive5.PNG)
+![](md/Diapositive6.PNG)
+![](md/Diapositive7.PNG)
+![](md/Diapositive8.PNG)
+![](md/Diapositive9.PNG)
+![](md/Diapositive10.PNG)
+![](md/Diapositive11.PNG)
+![](md/Diapositive12.PNG)
+![](md/Diapositive13.PNG)
